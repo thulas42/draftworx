@@ -1,0 +1,19 @@
+
+
+<h2>Leads List</h2>
+<button mat-raised-button color="primary" (click)="openAddLeadDialog()">Add Lead</button>
+<button mat-raised-button color="danger" (click)="deleteSelectedLeads()">Delete Lead</button>
+
+<mat-list>
+  <mat-list-item *ngFor="let lead of leads">
+    <mat-checkbox [checked]="isSelected(lead)" (change)="toggleSelection($event, lead)"></mat-checkbox>
+    <button mat-icon-button color="primary" (click)="openEditLeadDialog(lead)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <h3 mat-line>{{ lead.contactName }}</h3>
+    <p mat-line>Phone: {{ lead.phoneNumber }}</p>
+    <p mat-line>Best Time to Contact: {{ lead.bestTimeToContact }}</p>
+    <p mat-line>Reason for Call: {{ lead.reasonForCall }}</p>
+    <p mat-line>Notes: {{ lead.notes }}</p>
+  </mat-list-item>
+</mat-list>

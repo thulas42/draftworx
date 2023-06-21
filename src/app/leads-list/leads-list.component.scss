@@ -1,0 +1,11 @@
+mat-list{
+    display: flex;
+}
+mat-list-item{
+    height: auto !important;
+    display: inline-flex !important;
+    width: 100% !important;
+    border-radius: 5px;
+    background: #f2f2f2;
+    margin: 5px ;
+}
