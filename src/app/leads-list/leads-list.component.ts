@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Lead } from './lead.model';
 import { LeadDialogComponent } from './lead-dialog/lead-dialog.component';
 import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-leads-list',
@@ -10,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./leads-list.component.scss']
 })
 export class LeadsListComponent implements OnInit {
-  leads: Lead[] = [];
+  leads$: Observable<Lead[]> = of([]);
   selectedLeads: Lead[] = [];
 
   constructor(private dialog: MatDialog, private http: HttpClient) { }
@@ -20,9 +21,7 @@ export class LeadsListComponent implements OnInit {
   }
 
   fetchLeads() {
-    this.http.get<Lead[]>('http://localhost:3000/leads').subscribe(response => {
-      this.leads = response;
-    });
+    this.leads$ = this.http.get<Lead[]>('http://localhost:3000/leads');
   }
 
   openAddLeadDialog() {
@@ -31,11 +30,10 @@ export class LeadsListComponent implements OnInit {
       data: {}
     });
 
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.http.post<any>('http://localhost:3000/leads', result).subscribe(response => {
-          this.fetchLeads();
+          this.fetchLeads(); // Update leads display after adding a lead
         });
       }
     });
@@ -50,7 +48,7 @@ export class LeadsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.http.put<any>(`http://localhost:3000/leads/${lead.id}`, result).subscribe(response => {
-          this.fetchLeads();
+          this.fetchLeads(); // Update leads display after editing a lead
         });
       }
     });
@@ -70,11 +68,10 @@ export class LeadsListComponent implements OnInit {
       }
     }
   }
-  deleteSelectedLeads() {
-    const ids = this.selectedLeads.map(lead => lead.id);
-    this.http.delete<any>(`http://localhost:3000/leads/${ids.join(',')}`).subscribe(response => {
-      this.selectedLeads = [];
-    this.fetchLeads();
-  });
-}
+
+  deleteLead(lead: Lead) {
+    this.http.delete<any>(`http://localhost:3000/leads/${lead.id}`).subscribe(response => {
+      this.fetchLeads(); // Update leads display after deleting a lead
+    });
   }
+}

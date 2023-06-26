@@ -1,22 +1,36 @@
-
 <h2 mat-dialog-title>{{ data.id ? 'Edit Lead' : 'Add Lead' }}</h2>
-
 <mat-dialog-content>
   <form [formGroup]="dialogForm">
     <mat-form-field>
-      <input matInput formControlName="contactName" placeholder="Contact Name" required>
+      <input matInput formControlName="contactName" value="{{ data.contactName }}" placeholder="Contact Name" required>
+      <mat-error *ngIf="dialogForm.get('contactName')?.invalid && (dialogForm.get('contactName')?.dirty || dialogForm.get('contactName')?.touched)">
+        Contact Name is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="phoneNumber" placeholder="Phone Number" required>
+      <span matPrefix>+27 &nbsp;</span>
+      <input type="tel" matInput placeholder="555-555-1234" formControlName="phoneNumber" required>
+      <mat-error *ngIf="dialogForm.get('phoneNumber')?.invalid && (dialogForm.get('phoneNumber')?.dirty || dialogForm.get('phoneNumber')?.touched)">
+        Phone Number is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput formControlName="bestTimeToContact" placeholder="Best Time to Contact" required>
+      <mat-error *ngIf="dialogForm.get('bestTimeToContact')?.invalid && (dialogForm.get('bestTimeToContact')?.dirty || dialogForm.get('bestTimeToContact')?.touched)">
+        Best Time to Contact is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <input matInput formControlName="reasonForCall" placeholder="Reason for Call" required>
+      <mat-error *ngIf="dialogForm.get('reasonForCall')?.invalid && (dialogForm.get('reasonForCall')?.dirty || dialogForm.get('reasonForCall')?.touched)">
+        Reason for Call is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <textarea matInput formControlName="notes" placeholder="Notes" required></textarea>
+      <mat-error *ngIf="dialogForm.get('notes')?.invalid && (dialogForm.get('notes')?.dirty || dialogForm.get('notes')?.touched)">
+        Notes is required
+      </mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>

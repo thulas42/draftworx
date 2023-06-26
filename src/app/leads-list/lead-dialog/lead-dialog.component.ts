@@ -27,6 +27,7 @@ export class LeadDialogComponent {
       reasonForCall: ['', Validators.required],
       notes: ['', Validators.required]
     });
+    this.dialogForm.patchValue(this.data)
   }
 
   fetchLeads() {
@@ -49,7 +50,6 @@ export class LeadDialogComponent {
           this.fetchLeads();
         });
       }
-
       this.dialogRef.close();
     }
   }
