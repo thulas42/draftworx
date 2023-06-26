@@ -1,17 +1,20 @@
-<button mat-raised-button color="primary" (click)="openAddLeadDialog()">Add Lead         <mat-icon>add</mat-icon>
-</button>
+
+<span id="search">
+  <mat-form-field >
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput placeholder="Search Leads by name" (input)="searchLeads($event)">
+  </mat-form-field>
+</span>
 
 <mat-list>
-  <mat-list-item *ngFor="let lead of leads$ | async">
-
+  <mat-list-item *ngFor="let lead of filteredLeads$ | async">
     <h3 mat-line>{{ lead.contactName }}</h3>
     <p mat-line>Phone: {{ lead.phoneNumber }}</p>
     <p mat-line>Best Time to Contact: {{ lead.bestTimeToContact }}</p>
     <p mat-line>Reason for Call: {{ lead.reasonForCall }}</p>
     <p mat-line>Notes: {{ lead.notes }}</p>
-    <button mat-raised-button color="warn" (click)="deleteLead(lead)">Delete Lead <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-raised-button color="primary" (click)="openEditLeadDialog(lead)"> Edit <mat-icon>edit</mat-icon>
-    </button>
+
+    <button mat-raised-button color="warn" (click)="deleteLead(lead)">Delete Lead <mat-icon>delete</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="openEditLeadDialog(lead)"> Edit <mat-icon>edit</mat-icon></button>
   </mat-list-item>
 </mat-list>
